@@ -17,8 +17,5 @@ public class ProductService {
 
     public List<Product> getAllTopics() {
             return products;
-        }
-
     }
-}
 }

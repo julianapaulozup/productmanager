@@ -8,20 +8,18 @@ import java.util.List;
 public class ProductController {
 
 
-        @Autowired
-        private ProductService productService;
+    @Autowired
+    private ProductService productService;
 
 
-        @RequestMapping("/products")
-        public List <Product>  getAllTopics(){
-            return productService.getAllTopics();
-        }
+    @RequestMapping("/products")
+    public List<Product> getAllTopics() {
+        return productService.getAllTopics();
+    }
 
-        @RequestMapping(method = RequestMethod.POST, value = "/products")
-            public void addTopic(@RequestBody Product product){
-                productService.addproduct(product);
-            }
+    @RequestMapping(method = RequestMethod.POST, value = "/products")
+    public void addTopic(@RequestBody Product product) {
+        productService.addproduct(product);
+    }
 
-            }
-        }
 }
