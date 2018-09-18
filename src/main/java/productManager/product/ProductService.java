@@ -12,8 +12,13 @@ public class ProductService {
 
     ));
     public void addproduct(Product product) {
-            products.add(product);  
+            products.add(product);
+        }
+
+    public List<Product> getAllTopics() {
+            return products;
         }
 
     }
+}
 }

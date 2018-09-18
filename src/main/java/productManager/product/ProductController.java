@@ -11,11 +11,17 @@ public class ProductController {
         @Autowired
         private ProductService productService;
 
-        @RequestMapping(method = RequestMethod.POST, value = "/topics")
-        public void addTopic(@RequestBody Product product){
-            productService.addproduct(product);
+
+        @RequestMapping("/products")
+        public List <Product>  getAllTopics(){
+            return productService.getAllTopics();
         }
 
+        @RequestMapping(method = RequestMethod.POST, value = "/products")
+            public void addTopic(@RequestBody Product product){
+                productService.addproduct(product);
+            }
+
+            }
         }
-    }
 }
