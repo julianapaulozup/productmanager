@@ -13,13 +13,18 @@ public class ProductController {
 
 
     @RequestMapping("/products")
-    public List<Product> getAllTopics() {
-        return productService.getAllTopics();
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
+    }
+
+    @RequestMapping("/products/{id}")
+    public Product getProduct(@PathVariable String id){
+        return productService.getProduct(id);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/products")
     public void addTopic(@RequestBody Product product) {
-        productService.addproduct(product);
+        productService.addProduct(product);
     }
 
 }

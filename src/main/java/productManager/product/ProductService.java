@@ -15,11 +15,16 @@ public class ProductService {
             new Product("002","Feijão","4.50")
 
     ));
-    public void addproduct(Product product) {
+
+    public void addProduct(Product product) {
             products.add(product);
         }
 
-    public List<Product> getAllTopics() {
+    public List<Product> getAllProducts() {
             return products;
+    }
+
+    public Product getProduct(String id) {
+            return products.stream().filter(t -> t.getId().equals(id)).findFirst().get();
     }
 }
