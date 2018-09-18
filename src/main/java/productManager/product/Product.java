@@ -4,10 +4,13 @@ public class Product {
 
     private String id;
     private String name;
-    private String description;
+    private String price;
 
-    public Product(String id) {
+
+    public Product(String id, String name, String price) {
         this.id = id;
+        this.name = name;
+        this.price = price;
     }
 
     public String getId() {
@@ -22,15 +25,15 @@ public class Product {
         return name;
     }
 
-    public void setName(String nome) {
-        this.name = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPrice() {
+        return price;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPrice(String price) {
+        this.price = price;
     }
 }
