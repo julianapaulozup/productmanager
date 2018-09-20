@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @Service
@@ -17,7 +18,8 @@ public class ProductService {
     ));
 
     public void addProduct(Product product) {
-            products.add(product);
+
+        products.add(product);
         }
 
     public List<Product> getAllProducts() {
@@ -26,5 +28,6 @@ public class ProductService {
 
     public Product getProduct(String id) {
             return products.stream().filter(t -> t.getId().equals(id)).findFirst().get();
+
     }
 }
