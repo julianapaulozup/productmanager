@@ -1,11 +1,9 @@
 package productManager.product;
 
 import org.springframework.stereotype.Service;
+import productManager.product.exception.ProductNotFoundException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 
 @Service
@@ -27,7 +25,12 @@ public class ProductService {
     }
 
     public Product getProduct(String id) {
-            return products.stream().filter(t -> t.getId().equals(id)).findFirst().get();
+        try {
+            Product product = products.stream().filter(t -> t.getId().equals(id)).findFirst().get();
+            return product;
+        }catch (NoSuchElementException e) {
+            throw new ProductNotFoundException("Produto não encontrado");
+        }
 
     }
 }
