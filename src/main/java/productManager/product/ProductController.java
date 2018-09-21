@@ -14,7 +14,7 @@ public class ProductController {
 
     @RequestMapping(value ="/products/",method = RequestMethod.GET)
     public ResponseEntity<List<Product>>getAllProducts() {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(productService.getAllProducts());
+        return ResponseEntity.status(HttpStatus.OK).body(productService.getAllProducts());
     }
 
     @RequestMapping(value ="/products/{id}",method = RequestMethod.GET)
