@@ -24,9 +24,22 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/products")
-    public void addTopic(@RequestBody Product product) {
+    public void addProduct(@RequestBody Product product) {
         productService.addProduct(product);
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/products/{id}")
+    public ResponseEntity<Void> updateProduct(@RequestBody Product topic,@PathVariable String id){
+        productService.updateTopic(id,topic);
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/products/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable String id){
+        productService.deleteProduct(id);
+         return ResponseEntity.noContent().build();
+    }
+
 
 
 }

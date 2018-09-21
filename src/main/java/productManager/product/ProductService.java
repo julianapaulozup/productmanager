@@ -1,6 +1,7 @@
 package productManager.product;
 
 import org.springframework.stereotype.Service;
+import productManager.product.exception.ProductAlreadyExistException;
 import productManager.product.exception.ProductNotFoundException;
 
 import java.util.*;
@@ -10,18 +11,24 @@ import java.util.*;
 public class ProductService {
 
     private List<Product> products = new ArrayList<>(Arrays.asList(
-            new Product("001","Arroz","5.00"),
-            new Product("002","Feijão","4.50")
+            new Product("001", "Arroz", "5.00"),
+            new Product("002", "Feijão", "4.50")
 
     ));
 
     public void addProduct(Product product) {
 
-        products.add(product);
+        for (int i = 0; i < products.size(); i++) {
+            Product t = products.get(i);
+            if (t.getId().equals(product.getId())){
+                throw new ProductAlreadyExistException();
+            }
         }
+         products.add(product);
+    }
 
     public List<Product> getAllProducts() {
-            return products;
+        return products;
     }
 
     public Product getProduct(String id) {
@@ -29,6 +36,27 @@ public class ProductService {
             Product product = products.stream().filter(t -> t.getId().equals(id)).findFirst().get();
             return product;
         }catch (NoSuchElementException e) {
+            throw new ProductNotFoundException("Produto não encontrado");
+        }
+
+    }
+
+    public void updateTopic(String id, Product product) {
+        for (int i = 0; i < products.size(); i++) {
+            Product t = products.get(i);
+            if (t.getId().equals(id)) {
+                products.set(i, product);
+                return;
+            }
+        }
+        throw new ProductNotFoundException("Produto não encontrado");
+    }
+
+
+    public void deleteProduct(String id) {
+        try {
+            products.removeIf(t -> t.getId().equals(id));
+        } catch (NoSuchElementException e) {
             throw new ProductNotFoundException("Produto não encontrado");
         }
 
