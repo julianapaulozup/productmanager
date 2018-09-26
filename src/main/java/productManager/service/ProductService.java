@@ -1,11 +1,11 @@
-package productManager.product;
+package productManager.service;
 
 import org.springframework.stereotype.Service;
-import productManager.product.exception.ProductAlreadyExistException;
-import productManager.product.exception.ProductNotFoundException;
+import productManager.product.Product;
+import productManager.exception.ProductAlreadyExistException;
+import productManager.exception.ProductNotFoundException;
 
 import java.util.*;
-
 
 @Service
 public class ProductService {
@@ -52,13 +52,12 @@ public class ProductService {
         throw new ProductNotFoundException("Produto não encontrado");
     }
 
-
     public void deleteProduct(String id) {
-        try {
-            products.removeIf(t -> t.getId().equals(id));
-        } catch (NoSuchElementException e) {
+        if(!products.stream().filter(t -> t.getId().equals(id)).findFirst().isPresent())
             throw new ProductNotFoundException("Produto não encontrado");
-        }
+        else
+            products.removeIf(t -> t.getId().equals(id));
+
 
     }
 }

@@ -1,4 +1,4 @@
-package productManager.product;
+package productManager.handler;
 
 public class ErrorDetails {
 
