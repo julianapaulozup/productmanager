@@ -3,7 +3,7 @@ package productManager.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import productManager.product.Product;
+import productManager.service.Product;
 import productManager.service.ProductService;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class ProductController {
 
     @GetMapping ("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Product getProduct(@PathVariable ("id") String id){
+    public Product getProduct(@PathVariable ("id") Long id){
                 Product product = productService.getProduct(id);
                 return product;
     }
@@ -35,13 +35,13 @@ public class ProductController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateProduct(@RequestBody Product topic,@PathVariable String id){
+    public void updateProduct(@RequestBody Product topic,@PathVariable Long id){
         productService.updateTopic(id,topic);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteProduct(@PathVariable String id){
+    public void deleteProduct(@PathVariable Long id){
         productService.deleteProduct(id);
     }
 

@@ -1,7 +1,8 @@
 package productManager.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import productManager.product.Product;
 import productManager.exception.ProductAlreadyExistException;
 import productManager.exception.ProductNotFoundException;
 
@@ -10,54 +11,38 @@ import java.util.*;
 @Service
 public class ProductService {
 
-    private List<Product> products = new ArrayList<>(Arrays.asList(
-            new Product("001", "Arroz", "5.00"),
-            new Product("002", "Feijão", "4.50")
-
-    ));
+   @Autowired
+   ProductRepository repository;
 
     public void addProduct(Product product) {
-
-        for (int i = 0; i < products.size(); i++) {
-            Product t = products.get(i);
-            if (t.getId().equals(product.getId())){
-                throw new ProductAlreadyExistException();
-            }
-        }
-         products.add(product);
+            repository.save(product);
     }
 
     public List<Product> getAllProducts() {
-        return products;
+        return repository.findAll();
     }
 
-    public Product getProduct(String id) {
-        try {
-            Product product = products.stream().filter(t -> t.getId().equals(id)).findFirst().get();
-            return product;
-        }catch (NoSuchElementException e) {
-            throw new ProductNotFoundException("Produto não encontrado");
-        }
+    public Product getProduct(Long id) {
+        return repository.findById(id).
+                orElseThrow(() -> new ProductNotFoundException(" Product not found with id " + id));
 
     }
 
-    public void updateTopic(String id, Product product) {
-        for (int i = 0; i < products.size(); i++) {
-            Product t = products.get(i);
-            if (t.getId().equals(id)) {
-                products.set(i, product);
-                return;
-            }
-        }
-        throw new ProductNotFoundException("Produto não encontrado");
+    public Product updateTopic(Long id, Product product) {
+        return repository.findById(id)
+                .map(p -> {
+                    p.setName(product.getName());
+                    p.setPrice(product.getPrice());
+                    return repository.save(p);
+                }).orElseThrow(() -> new ProductNotFoundException("Product not found with id " + id));
     }
 
-    public void deleteProduct(String id) {
-        if(!products.stream().filter(t -> t.getId().equals(id)).findFirst().isPresent())
-            throw new ProductNotFoundException("Produto não encontrado");
-        else
-            products.removeIf(t -> t.getId().equals(id));
-
+    public ResponseEntity<?> deleteProduct(Long id) {
+        return repository.findById(id)
+                .map(p -> {
+                    repository.delete(p);
+                    return ResponseEntity.ok().build();
+                }).orElseThrow(() -> new ProductNotFoundException("Product not found with id " + id));
 
     }
 }
