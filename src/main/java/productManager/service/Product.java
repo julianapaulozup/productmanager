@@ -1,16 +1,19 @@
 package productManager.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Produtos")
 public class Product implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotBlank
     @Column(name = "Nome")
@@ -18,6 +21,23 @@ public class Product implements Serializable {
     @Column(name = "Preço")
     private String price;
 
+    @ManyToMany(cascade= { CascadeType.ALL })
+    @JoinTable(name="Avaliação_Produto",
+            joinColumns=
+            @JoinColumn(name="Produto_ID", referencedColumnName="id"),
+            inverseJoinColumns=
+            @JoinColumn(name="Avaliação_ID", referencedColumnName="id")
+    )
+    @JsonIgnore
+    public Set<Evaluation> evaluations = new HashSet<>();
+
+    public Set<Evaluation> getEvaluations() {
+        return evaluations;
+    }
+
+    public void setPersons(Set<Evaluation> persons) {
+        this.evaluations = persons;
+    }
     public Product(){
 
     }

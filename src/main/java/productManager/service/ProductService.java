@@ -45,4 +45,13 @@ public class ProductService {
                 }).orElseThrow(() -> new ProductNotFoundException("Product not found with id " + id));
 
     }
+
+    public Set<Evaluation>getProductEvaluations(Long id) {
+        Product product =repository.findById(id).
+                orElseThrow(() -> new ProductNotFoundException(" Product not found with id " + id));
+        return product.getEvaluations();
+    }
+
+
+
 }
