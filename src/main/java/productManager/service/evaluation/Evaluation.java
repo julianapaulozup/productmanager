@@ -1,6 +1,7 @@
-package productManager.service;
+package productManager.service.evaluation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import productManager.service.product.Product;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -21,9 +22,9 @@ public class Evaluation {
     @Column(name = "Comentário")
     private String commentary;
 
-    @ManyToMany(mappedBy="evaluations",cascade= CascadeType.ALL )
+    @ManyToMany(mappedBy = "evaluations", cascade = CascadeType.ALL)
     @JsonIgnore
-    public Set<Product> products = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 
 
     public Evaluation(){
@@ -50,5 +51,13 @@ public class Evaluation {
 
     public void setCommentary(String commentary) {
         this.commentary = commentary;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 }

@@ -3,12 +3,9 @@ package productManager.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import productManager.service.Evaluation;
-import productManager.service.EvaluationService;
+import productManager.service.evaluation.Evaluation;
+import productManager.service.evaluation.EvaluationService;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
-
 
 @RestController
 @RequestMapping("/evaluations")

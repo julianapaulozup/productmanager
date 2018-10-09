@@ -1,18 +1,19 @@
-package productManager.service;
+package productManager.service.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import productManager.exception.ProductAlreadyExistException;
 import productManager.exception.ProductNotFoundException;
+import productManager.service.evaluation.Evaluation;
 
 import java.util.*;
 
 @Service
 public class ProductService {
 
-   @Autowired
-   ProductRepository repository;
+    @Autowired
+    ProductRepository repository;
+
 
     public void addProduct(Product product) {
             repository.save(product);
@@ -51,7 +52,5 @@ public class ProductService {
                 orElseThrow(() -> new ProductNotFoundException(" Product not found with id " + id));
         return product.getEvaluations();
     }
-
-
 
 }

@@ -1,6 +1,7 @@
-package productManager.service;
+package productManager.service.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import productManager.service.evaluation.Evaluation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -28,15 +29,15 @@ public class Product implements Serializable {
             inverseJoinColumns=
             @JoinColumn(name="Avaliação_ID", referencedColumnName="id")
     )
-    @JsonIgnore
+
     public Set<Evaluation> evaluations = new HashSet<>();
 
     public Set<Evaluation> getEvaluations() {
         return evaluations;
     }
 
-    public void setPersons(Set<Evaluation> persons) {
-        this.evaluations = persons;
+    public void setEvaluations(Set<Evaluation> evaluations) {
+        this.evaluations = evaluations;
     }
     public Product(){
 
