@@ -18,7 +18,7 @@ public class Evaluation {
     private Long id;
     @NotBlank
     @Column(name = "Nota")
-    private String score;
+    private double score;
     @Column(name = "Comentário")
     private String commentary;
 
@@ -26,22 +26,21 @@ public class Evaluation {
     @JsonIgnore
     private Set<Product> products = new HashSet<>();
 
-
     public Evaluation(){
 
     }
 
-    public Evaluation(String commentary,String score){
+    public Evaluation(String commentary,double score){
         this.score = score;
         this.commentary = commentary;
 
     }
 
-    public String getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(double score) {
         this.score = score;
     }
 

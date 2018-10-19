@@ -37,7 +37,7 @@ public class ProductController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void updateProduct(@RequestBody Product topic,@PathVariable Long id){
-        productService.updateTopic(id,topic);
+        productService.updateProduct(id,topic);
     }
 
     @PostMapping
@@ -52,7 +52,4 @@ public class ProductController {
     public void deleteProduct(@PathVariable Long id){
         productService.deleteProduct(id);
     }
-
-
-
 }

@@ -19,13 +19,12 @@ public class EvaluateProductController {
     private EvaluationService evaluationService;
 
 
-    @PostMapping("/{id}/{score}")
+    @PostMapping("/{product_id}/{evaluation_id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addEvaluation(@PathVariable ("id") Long id,@PathVariable ("score") Long score) {
-        Product product = productService.getProduct(id);
-        Evaluation evaluation = evaluationService.getEvaluation(score);
-
+    public void addEvaluation(@PathVariable ("product_id") Long product_id,@PathVariable ("evaluation_id") Long evaluation_id) {
+        Product product = productService.getProduct(product_id);
+        Evaluation evaluation = evaluationService.getEvaluation(evaluation_id);
         product.getEvaluations().add(evaluation);
-        productService.addProduct(product);
+        productService.updateProduct(product_id,product);
     }
 }

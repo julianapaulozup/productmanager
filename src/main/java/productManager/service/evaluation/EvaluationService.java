@@ -4,8 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import productManager.exception.EvaluationNotFoundException;
+import productManager.exception.ProductNotFoundException;
+import productManager.service.product.Product;
 
 import java.util.List;
+import java.util.Set;
+
 @Service
 public class EvaluationService {
 
@@ -23,7 +27,6 @@ public class EvaluationService {
     public Evaluation getEvaluation(Long id) {
         return repository.findById(id).
                 orElseThrow(() -> new EvaluationNotFoundException(" Evaluation not found with id " + id));
-
     }
 
     public Evaluation updateEvaluation(Long id, Evaluation evaluation) {
@@ -42,6 +45,12 @@ public class EvaluationService {
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new EvaluationNotFoundException("Evaluation not found with id " + id));
 
+    }
+
+    public Set<Product> getEvaluationProducts(Long id) {
+        Evaluation evaluation =repository.findById(id).
+                orElseThrow(() -> new EvaluationNotFoundException(" Product not found with id " + id));
+        return evaluation.getProducts();
     }
 
 }

@@ -1,6 +1,7 @@
 package productManager.service.product;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import productManager.service.evaluation.Evaluation;
 
 import javax.persistence.*;
@@ -29,17 +30,10 @@ public class Product implements Serializable {
             inverseJoinColumns=
             @JoinColumn(name="Avaliação_ID", referencedColumnName="id")
     )
-
+    @JsonIgnore
     public Set<Evaluation> evaluations = new HashSet<>();
 
-    public Set<Evaluation> getEvaluations() {
-        return evaluations;
-    }
-
-    public void setEvaluations(Set<Evaluation> evaluations) {
-        this.evaluations = evaluations;
-    }
-    public Product(){
+     public Product(){
 
     }
 
@@ -73,5 +67,14 @@ public class Product implements Serializable {
     public void setPrice(String price) {
         this.price = price;
     }
+
+    public Set<Evaluation> getEvaluations() {
+        return evaluations;
+    }
+
+    public void setEvaluations(Set<Evaluation> evaluations) {
+        this.evaluations = evaluations;
+    }
+
 
 }

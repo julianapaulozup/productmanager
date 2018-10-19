@@ -14,7 +14,6 @@ public class ProductService {
     @Autowired
     ProductRepository repository;
 
-
     public void addProduct(Product product) {
             repository.save(product);
     }
@@ -29,7 +28,7 @@ public class ProductService {
 
     }
 
-    public Product updateTopic(Long id, Product product) {
+    public Product updateProduct(Long id, Product product) {
         return repository.findById(id)
                 .map(p -> {
                     p.setName(product.getName());
