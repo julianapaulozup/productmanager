@@ -1,4 +1,4 @@
-package productManager.Repository;
+package productManager.repository;
 import org.assertj.core.api.Assertions;
 import org.junit.Rule;
 import org.junit.Test;
