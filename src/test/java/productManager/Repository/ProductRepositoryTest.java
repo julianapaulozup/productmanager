@@ -1,0 +1,47 @@
+package productManager.Repository;
+
+import org.assertj.core.api.Assertions;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import productManager.service.evaluation.Evaluation;
+import productManager.service.product.Product;
+import productManager.service.product.ProductRepository;
+
+
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+public class ProductRepositoryTest {
+
+    @Autowired
+    ProductRepository repository;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void createShouldPersistDataSucess(){
+        Product product = new Product(0011l,"Produto",8);
+        this.repository.save(product);
+        Assertions.assertThat(product.getId()).isNotNull();
+        Assertions.assertThat(product.getName()).isEqualTo("Produto");
+        Assertions.assertThat(product.getPrice()).isEqualTo(8);
+    }
+    @Test
+    public void createShouldPersistDataFail(){
+        Product product = new Product(0011l,"Produto1",8);
+        this.repository.save(product);
+        Assertions.assertThat(product.getId()).isNotNull();
+        Assertions.assertThat(product.getName()).isEqualTo("Produto");
+        Assertions.assertThat(product.getPrice()).isEqualTo(8);
+    }
+
+
+
+}

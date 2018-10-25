@@ -22,7 +22,8 @@ public class Evaluation {
     @Column(name = "Comentário")
     private String commentary;
 
-    @ManyToMany(mappedBy = "evaluations", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "evaluations", cascade =
+            {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnore
     private Set<Product> products = new HashSet<>();
 
@@ -30,11 +31,17 @@ public class Evaluation {
 
     }
 
-    public Evaluation(String commentary,double score){
+    public Evaluation(Long id, String commentary,double score){
+        this.id = id;
         this.score = score;
         this.commentary = commentary;
 
     }
+
+    public Long getId() {
+        return id;
+    }
+
 
     public double getScore() {
         return score;

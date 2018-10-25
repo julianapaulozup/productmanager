@@ -14,16 +14,17 @@ import java.util.Set;
 @Table(name = "Produtos")
 public class Product implements Serializable {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotBlank
     @Column(name = "Nome")
     private String name;
     @Column(name = "Preço")
-    private String price;
+    private double price;
 
-    @ManyToMany(cascade= { CascadeType.ALL })
+    @ManyToMany(cascade =
+            {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name="Avaliação_Produto",
             joinColumns=
             @JoinColumn(name="Produto_ID", referencedColumnName="id"),
@@ -38,7 +39,7 @@ public class Product implements Serializable {
     }
 
 
-    public Product(Long id, String name, String price) {
+    public Product(Long id, String name, double price) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -60,11 +61,11 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
