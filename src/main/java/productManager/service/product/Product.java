@@ -6,6 +6,7 @@ import productManager.service.evaluation.Evaluation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +18,7 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank
+    @NotEmpty
     @Column(name = "Nome")
     private String name;
     @Column(name = "Preço")

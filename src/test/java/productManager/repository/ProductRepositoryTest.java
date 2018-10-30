@@ -12,6 +12,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import productManager.service.product.Product;
 import productManager.service.product.ProductRepository;
 
+import javax.rmi.PortableRemoteObject;
+import javax.validation.ConstraintViolationException;
+
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -26,7 +29,7 @@ public class ProductRepositoryTest {
 
     @Test
     public void createShouldPersistDataSucess(){
-        Product product = new Product(0011l,"Produto",8);
+        Product product = new Product(11L,"Produto",8);
         this.repository.save(product);
         Assertions.assertThat(product.getId()).isNotNull();
         Assertions.assertThat(product.getName()).isEqualTo("Produto");
@@ -34,7 +37,7 @@ public class ProductRepositoryTest {
     }
     @Test
     public void createShouldPersistDataFail(){
-        Product product = new Product(0011l,"Produto1",8);
+        Product product = new Product(11L,"Produto1",8);
         this.repository.save(product);
         Assertions.assertThat(product.getId()).isNotNull();
         Assertions.assertThat(product.getName()).isEqualTo("Produto");

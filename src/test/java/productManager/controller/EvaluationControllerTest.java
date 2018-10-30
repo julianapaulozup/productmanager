@@ -12,6 +12,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import productManager.service.evaluation.Evaluation;
+import productManager.service.evaluation.EvaluationService;
 import productManager.service.product.Product;
 import productManager.service.product.ProductService;
 
@@ -20,24 +22,21 @@ import java.util.List;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(ProductController.class)
+@WebMvcTest(EvaluationController.class)
 @AutoConfigureDataJpa
-public class ProductControllerTest {
-
+public class EvaluationControllerTest {
     @Autowired
     private MockMvc mvc;
 
     @MockBean
-    private ProductService service;
+    private EvaluationService service;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -46,26 +45,26 @@ public class ProductControllerTest {
     public void givenProducts_whenGetProducts_thenReturnJsonArray() throws Exception {
 
 
-        Product product = new Product(11L,"Produto",8);
+        Evaluation evaluation= new Evaluation(11L,"Comentário",8);
 
-        List<Product> allProducts = Arrays.asList(product);
+        List<Evaluation> allEvaluations = Arrays.asList(evaluation);
 
-        given(service.getAllProducts()).willReturn(allProducts);
+        given(service.getAllEvaluations()).willReturn(allEvaluations);
 
-        mvc.perform(get("/products/")
+        mvc.perform(get("/evaluations/")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name").value("Produto"));
+                .andExpect(jsonPath("$[0].commentary").value("Comentário"));
     }
 
     @Test
     public void whenpostProduct_thenReturnCreated() throws Exception {
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", "Produto");
-        jsonObject.put("price", 10.0);
-        mvc.perform(post("/products/")
+        jsonObject.put("commentary", "Comentário");
+        jsonObject.put("score", 10.0);
+        mvc.perform(post("/evaluations/")
                 .contentType("application/json;charset=UTF-8")
                 .content(String.valueOf(jsonObject)))
                 .andDo(print())
@@ -76,9 +75,9 @@ public class ProductControllerTest {
     public void whenputProduct_thenReturnOk() throws Exception {
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", "Produto");
-        jsonObject.put("price", 10.0);
-        mvc.perform(put("/products/{id}", 1L)
+        jsonObject.put("commentary", "Comentário");
+        jsonObject.put("score", 10.0);
+        mvc.perform(put("/evaluations/{id}", 1L)
                 .contentType("application/json;charset=UTF-8")
                 .content(String.valueOf(jsonObject)))
                 .andExpect(status().isOk());
@@ -87,7 +86,7 @@ public class ProductControllerTest {
     @Test
     public void whendeleteProduct_thenReturnOk() throws Exception {
 
-                mvc.perform(delete("/products/{id}", 1l))
+        mvc.perform(delete("/evaluations/{id}", 1l))
                 .andExpect(status().isOk());
     }
 

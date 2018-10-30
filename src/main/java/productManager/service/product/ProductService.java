@@ -12,10 +12,11 @@ import java.util.*;
 public class ProductService {
 
     @Autowired
-    ProductRepository repository;
+    private ProductRepository repository;
 
     public void addProduct(Product product) {
             repository.save(product);
+
     }
 
     public List<Product> getAllProducts() {

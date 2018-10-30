@@ -24,19 +24,19 @@ public class EvaluationRepositoryTest {
 
     @Test
     public void createShouldPersistDataSucess(){
-        Evaluation evaluation = new Evaluation(0011l,"medio",8.5);
+        Evaluation evaluation = new Evaluation(11L,"Comentário",8.5);
         this.repository.save(evaluation);
         Assertions.assertThat(evaluation.getId()).isNotNull();
-        Assertions.assertThat(evaluation.getCommentary()).isEqualTo("medio");
+        Assertions.assertThat(evaluation.getCommentary()).isEqualTo("Comentário");
         Assertions.assertThat(evaluation.getScore()).isEqualTo(8.5);
     }
 
     @Test
     public void createShouldPersistDataFail(){
-        Evaluation evaluation = new Evaluation(0011l,"medio1",8.5);
+        Evaluation evaluation = new Evaluation(11L,"Comentário1",8.5);
         this.repository.save(evaluation);
         Assertions.assertThat(evaluation.getId()).isNotNull();
-        Assertions.assertThat(evaluation.getCommentary()).isEqualTo("medio");
+        Assertions.assertThat(evaluation.getCommentary()).isEqualTo("Comentário");
         Assertions.assertThat(evaluation.getScore()).isEqualTo(8.5);
     }
 

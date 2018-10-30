@@ -9,58 +9,66 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import productManager.exception.EvaluationNotFoundException;
 import productManager.exception.ProductNotFoundException;
+import productManager.service.evaluation.Evaluation;
+import productManager.service.evaluation.EvaluationRepository;
+import productManager.service.evaluation.EvaluationService;
 import productManager.service.product.Product;
 import productManager.service.product.ProductRepository;
 import productManager.service.product.ProductService;
 
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+
 @RunWith(MockitoJUnitRunner.class)
-public class ProductServiceTest {
+public class EvaluationServiceTest {
 
     @InjectMocks
-    private ProductService productService;
+    private EvaluationService evaluationService;
 
     @Mock
-    private ProductRepository repository;
+    private EvaluationRepository repository;
 
     @Before
     public void setUp() {
-        Product product = new Product((long) 11, "Produto", 8);
+        Evaluation evaluation = new Evaluation(11L, "Comentário", 8);
 
-        when(repository.findById(product.getId()))
-                .thenReturn(java.util.Optional.ofNullable(product));
+        when(repository.findById(evaluation.getId()))
+                .thenReturn(java.util.Optional.ofNullable(evaluation));
     }
+
 
     @Test
     public void whenValidId_thenProductShouldBeFoundSucess() {
-        Long id = (long) 11;
-        Product found = productService.getProduct(id);
-
+        Long id = 11L;
+        when(repository.findById(anyLong())).thenReturn(buildEvaluation());
+        Evaluation found = evaluationService.getEvaluation(id);
 
         verify(repository).findById(eq(11L));
         Assertions.assertThat(found)
                 .isNotNull();
         Assertions.assertThat(found.getId())
                 .isNotNull();
-        Assertions.assertThat(found.getId())
-                .isEqualTo(id);
     }
 
-    @Test(expected = ProductNotFoundException.class)
+    private Optional<Evaluation> buildEvaluation() {
+        Evaluation evaluation = new Evaluation(11L, "Comentãrio", 8);
+
+        return Optional.ofNullable(evaluation);
+    }
+
+    @Test(expected = EvaluationNotFoundException.class)
     public void whenValidId_thenProductShouldBeFoundFail() {
         Long id = (long) 1;
-        Product found = productService.getProduct(id);
+        Evaluation found = evaluationService.getEvaluation(id);
 
-        verify(repository).findById(eq(11L));
-        Assertions.assertThat(found)
-                .isNotNull();
-        Assertions.assertThat(found.getId())
-                .isNotNull();
         Assertions.assertThat(found.getId())
                 .isEqualTo(id);
     }
@@ -69,17 +77,17 @@ public class ProductServiceTest {
     public void whenValidId_thenProductShouldDeleteSucess() {
         Long id = (long) 11;
         HttpStatus a2 = ResponseEntity.ok().build().getStatusCode();
-        ResponseEntity a = productService.deleteProduct(id);
+        ResponseEntity a = evaluationService.deleteEvaluation(id);
 
         Assertions.assertThat(a.getStatusCode())
                 .isEqualTo(a2);
     }
 
-    @Test(expected = ProductNotFoundException.class)
+    @Test(expected = EvaluationNotFoundException.class)
     public void whenValidId_thenProductShouldDeleteFail() {
         Long id = (long) 1;
         HttpStatus a2 = ResponseEntity.ok().build().getStatusCode();
-        ResponseEntity a = productService.deleteProduct(id);
+        ResponseEntity a = evaluationService.deleteEvaluation(id);
 
         Assertions.assertThat(a.getStatusCode())
                 .isEqualTo(a2);
@@ -88,32 +96,32 @@ public class ProductServiceTest {
     @Test
     public void whenValidId_thenProductShouldUpdateSucess() {
         Long id = 11L;
-        Product found = new Product(11L, "Produto atualizado", 8);
+        Evaluation found = new Evaluation(11L, "Comentário atualizado", 8);
 
         when(repository.save(any())).thenReturn(found);
 
-        Product product = productService.updateProduct(id, found);
+        Evaluation evaluation = evaluationService.updateEvaluation(id, found);
 
-        Assertions.assertThat(product.getName()).isEqualTo("Produto atualizado");
+        Assertions.assertThat(evaluation.getCommentary()).isEqualTo("Comentário atualizado");
     }
 
-    @Test(expected = ProductNotFoundException.class)
+    @Test(expected = EvaluationNotFoundException.class)
     public void whenValidId_thenProductShouldUpdateFail() {
         Long id = 1L;
-        Product found = new Product(1L, "Produto atualizado", 8);
+        Evaluation found = new Evaluation(11L, "Comentário atualizado", 8);
 
-        Product product = productService.updateProduct(id, found);
+        Evaluation evaluation = evaluationService.updateEvaluation(id, found);
 
-        Assertions.assertThat(product.getName()).isEqualTo("Produto atualizado");
+        Assertions.assertThat(evaluation.getCommentary()).isEqualTo("Comentário atualizado");
     }
 
     @Test
     public void whenValidProduct_thenProductShouldAddSucess(){
 
-        Product product = new Product(1L, "Produto", 8);
+        Evaluation found = new Evaluation(11L, "Comentário atualizado", 8);
 
-        when(repository.save(any())).thenReturn(product);
+        when(repository.save(any())).thenReturn(found);
 
-        productService.addProduct(product);
+        evaluationService.addEvaluation(found);
     }
 }
