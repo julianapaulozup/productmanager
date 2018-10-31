@@ -16,7 +16,6 @@ public class Evaluation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank
     @Column(name = "Nota")
     private double score;
     @Column(name = "Comentário")
@@ -31,6 +30,11 @@ public class Evaluation {
 
     }
 
+    public Evaluation(String commentary,double score){
+        this.score = score;
+        this.commentary = commentary;
+
+    }
     public Evaluation(Long id, String commentary,double score){
         this.id = id;
         this.score = score;

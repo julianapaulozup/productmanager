@@ -1,6 +1,7 @@
 package productManager.repository;
 
 import org.assertj.core.api.Assertions;
+import org.junit.ComparisonFailure;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -11,9 +12,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import productManager.service.product.Product;
 import productManager.service.product.ProductRepository;
+import java.util.List;
+import java.util.Optional;
 
-import javax.rmi.PortableRemoteObject;
-import javax.validation.ConstraintViolationException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 
 @RunWith(SpringRunner.class)
@@ -29,21 +32,85 @@ public class ProductRepositoryTest {
 
     @Test
     public void createShouldPersistDataSucess(){
-        Product product = new Product(11L,"Produto",8);
+
+        Product product = new Product("Produto",8);
         this.repository.save(product);
         Assertions.assertThat(product.getId()).isNotNull();
         Assertions.assertThat(product.getName()).isEqualTo("Produto");
         Assertions.assertThat(product.getPrice()).isEqualTo(8);
+
     }
-    @Test
+
+    @Test(expected = ComparisonFailure.class)
     public void createShouldPersistDataFail(){
-        Product product = new Product(11L,"Produto1",8);
+
+        Product product = new Product("Produto1",8);
         this.repository.save(product);
         Assertions.assertThat(product.getId()).isNotNull();
         Assertions.assertThat(product.getName()).isEqualTo("Produto");
         Assertions.assertThat(product.getPrice()).isEqualTo(8);
     }
 
+    @Test
+    public void findProductAfterSave() {
 
+        Product product = new Product("Product", 10);
+        repository.save(product);
+        List<Product> products = repository.findAll();
+        assertEquals(4, products.size());
+        int size = products.size() - 1 ;
+        Assertions.assertThat(products.get(size).getId()).isNotNull();
+        Assertions.assertThat(products.get(size).getPrice()).isEqualTo(10);
+        Assertions.assertThat(products.get(size).getName()).isEqualTo("Product");
+
+    }
+
+    @Test
+    public void deleteProductAfterSave() {
+
+        Product product = new Product("Product", 10);
+        repository.save(product);
+        List <Product> foundProducts = repository.findAll();
+        repository.delete(foundProducts.get(0));
+        List <Product> products = repository.findAll();
+        assertEquals(3, products.size());
+
+    }
+
+    @Test
+    public void updateProductAfterSave() {
+
+        Product product = new Product("Product", 10);
+        repository.save(product);
+        product.setName("Product Updated");
+        repository.save(product);
+        List <Product> products = repository.findAll();
+        int size = products.size() - 1;
+        assertEquals(4, products.size());
+        assertEquals("Product Updated", products.get(size).getName());
+
+    }
+
+    @Test
+    public void findProductByName() {
+
+        repository.save(new Product("Product1", 10));
+        repository.save(new Product("Product2", 20));
+        repository.save(new Product( "Product3", 30));
+        List <Product> products = repository.findByName("Product1");
+        assertEquals(1, products.size());
+        Product foundProduct = products.get(0);
+        Assertions.assertThat(foundProduct.getId()).isNotNull();
+        Assertions.assertThat(foundProduct.getPrice()).isEqualTo(10);
+        Assertions.assertThat(foundProduct.getName()).isEqualTo("Product1");
+
+    }
+
+    @Test
+    public void returnEmptyWheNotFound(){
+        Optional<Product> found;
+        found = repository.findById(111L);
+        Assertions.assertThat(!found.isPresent());
+    }
 
 }
