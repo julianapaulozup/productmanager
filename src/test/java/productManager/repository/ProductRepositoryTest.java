@@ -92,21 +92,6 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void findProductByName() {
-
-        repository.save(new Product("Product1", 10));
-        repository.save(new Product("Product2", 20));
-        repository.save(new Product( "Product3", 30));
-        List <Product> products = repository.findByName("Product1");
-        assertEquals(1, products.size());
-        Product foundProduct = products.get(0);
-        Assertions.assertThat(foundProduct.getId()).isNotNull();
-        Assertions.assertThat(foundProduct.getPrice()).isEqualTo(10);
-        Assertions.assertThat(foundProduct.getName()).isEqualTo("Product1");
-
-    }
-
-    @Test
     public void returnEmptyWheNotFound(){
         Optional<Product> found;
         found = repository.findById(111L);

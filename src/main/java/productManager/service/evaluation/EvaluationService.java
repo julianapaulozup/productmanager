@@ -15,8 +15,8 @@ public class EvaluationService {
     @Autowired
     EvaluationRepository repository;
 
-    public void addEvaluation(Evaluation evaluation) {
-        repository.save(evaluation);
+    public Evaluation addEvaluation(Evaluation evaluation) {
+        return repository.save(evaluation);
     }
 
     public List<Evaluation> getAllEvaluations() {

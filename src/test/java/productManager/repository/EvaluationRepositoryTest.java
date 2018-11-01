@@ -50,7 +50,6 @@ public class EvaluationRepositoryTest {
         Assertions.assertThat(evaluation.getScore()).isEqualTo(8.5);
     }
 
-
     @Test
     public void findEvaluationAfterSave() {
 
@@ -68,10 +67,10 @@ public class EvaluationRepositoryTest {
     @Test
     public void deleteEvaluationAfterSave() {
 
-        Evaluation evaluation = new Evaluation("Evaluation", 10);
+        Evaluation evaluation = new Evaluation("Evaluation", 11);
         repository.save(evaluation);
         List <Evaluation> foundEvaluations = repository.findAll();
-        repository.delete(foundEvaluations.get(0));
+        repository.delete(foundEvaluations.get(10));
         List <Evaluation> evaluations = repository.findAll();
         assertEquals(10, evaluations.size());
 

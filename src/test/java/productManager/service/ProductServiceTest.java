@@ -10,11 +10,15 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import productManager.exception.ProductNotFoundException;
+import productManager.service.evaluation.Evaluation;
 import productManager.service.product.Product;
 import productManager.service.product.ProductRepository;
 import productManager.service.product.ProductService;
 
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -30,17 +34,18 @@ public class ProductServiceTest {
 
     @Before
     public void setUp() {
-        Product product = new Product((long) 11, "Produto", 8);
+        Product product = new Product(11L, "Produto", 8);
 
         when(repository.findById(product.getId()))
                 .thenReturn(java.util.Optional.ofNullable(product));
+        when(repository.save(any())).thenReturn(product);
     }
 
     @Test
     public void whenValidId_thenProductShouldBeFoundSucess() {
         Long id = (long) 11;
-        Product found = productService.getProduct(id);
 
+        Product found = productService.getProduct(id);
 
         verify(repository).findById(eq(11L));
         Assertions.assertThat(found)
@@ -90,8 +95,6 @@ public class ProductServiceTest {
         Long id = 11L;
         Product found = new Product(11L, "Produto atualizado", 8);
 
-        when(repository.save(any())).thenReturn(found);
-
         Product product = productService.updateProduct(id, found);
 
         Assertions.assertThat(product.getName()).isEqualTo("Produto atualizado");
@@ -104,16 +107,17 @@ public class ProductServiceTest {
 
         Product product = productService.updateProduct(id, found);
 
+        Assertions.assertThat(product.getId()).isNotNull();
         Assertions.assertThat(product.getName()).isEqualTo("Produto atualizado");
     }
 
     @Test
     public void whenValidProduct_thenProductShouldAddSucess(){
-
         Product product = new Product(1L, "Produto", 8);
 
-        when(repository.save(any())).thenReturn(product);
+        product = productService.addProduct(product);
 
-        productService.addProduct(product);
+        Assertions.assertThat(product.getId()).isNotNull();
+        Assertions.assertThat(product.getName()).isEqualTo("Produto");
     }
 }

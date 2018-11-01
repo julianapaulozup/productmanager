@@ -42,13 +42,14 @@ public class EvaluationServiceTest {
 
         when(repository.findById(evaluation.getId()))
                 .thenReturn(java.util.Optional.ofNullable(evaluation));
+        when(repository.save(any())).thenReturn(evaluation);
+
     }
 
 
     @Test
     public void whenValidId_thenProductShouldBeFoundSucess() {
         Long id = 11L;
-        when(repository.findById(anyLong())).thenReturn(buildEvaluation());
         Evaluation found = evaluationService.getEvaluation(id);
 
         verify(repository).findById(eq(11L));
@@ -58,11 +59,6 @@ public class EvaluationServiceTest {
                 .isNotNull();
     }
 
-    private Optional<Evaluation> buildEvaluation() {
-        Evaluation evaluation = new Evaluation(11L, "Comentãrio", 8);
-
-        return Optional.ofNullable(evaluation);
-    }
 
     @Test(expected = EvaluationNotFoundException.class)
     public void whenValidId_thenProductShouldBeFoundFail() {
@@ -98,8 +94,6 @@ public class EvaluationServiceTest {
         Long id = 11L;
         Evaluation found = new Evaluation(11L, "Comentário atualizado", 8);
 
-        when(repository.save(any())).thenReturn(found);
-
         Evaluation evaluation = evaluationService.updateEvaluation(id, found);
 
         Assertions.assertThat(evaluation.getCommentary()).isEqualTo("Comentário atualizado");
@@ -118,10 +112,12 @@ public class EvaluationServiceTest {
     @Test
     public void whenValidProduct_thenProductShouldAddSucess(){
 
-        Evaluation found = new Evaluation(11L, "Comentário atualizado", 8);
+        Evaluation found = new Evaluation(11L, "Comentário", 8);
 
-        when(repository.save(any())).thenReturn(found);
+        found = evaluationService.addEvaluation(found);
 
-        evaluationService.addEvaluation(found);
+        Assertions.assertThat(found.getId()).isNotNull();
+        Assertions.assertThat(found.getCommentary()).isEqualTo("Comentário");
+
     }
 }
