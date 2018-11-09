@@ -1,4 +1,4 @@
-package productManager.service;
+package productManager_unitTests.service;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
@@ -9,19 +9,12 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import productManager.exception.EvaluationNotFoundException;
-import productManager.exception.ProductNotFoundException;
-import productManager.service.evaluation.Evaluation;
-import productManager.service.evaluation.EvaluationRepository;
-import productManager.service.evaluation.EvaluationService;
-import productManager.service.product.Product;
-import productManager.service.product.ProductRepository;
-import productManager.service.product.ProductService;
-
-import java.util.Optional;
+import productManager_unitTests.exception.EvaluationNotFoundException;
+import productManager_unitTests.service.evaluation.Evaluation;
+import productManager_unitTests.service.evaluation.EvaluationRepository;
+import productManager_unitTests.service.evaluation.EvaluationService;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

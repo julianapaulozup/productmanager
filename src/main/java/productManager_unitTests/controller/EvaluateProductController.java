@@ -1,12 +1,12 @@
-package productManager.controller;
+package productManager_unitTests.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import productManager.service.evaluation.Evaluation;
-import productManager.service.evaluation.EvaluationService;
-import productManager.service.product.Product;
-import productManager.service.product.ProductService;
+import productManager_unitTests.service.evaluation.Evaluation;
+import productManager_unitTests.service.evaluation.EvaluationService;
+import productManager_unitTests.service.product.Product;
+import productManager_unitTests.service.product.ProductService;
 
 @RestController
 @RequestMapping("/score")

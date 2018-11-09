@@ -1,4 +1,4 @@
-package productManager.exception;
+package productManager_unitTests.exception;
 
 public class EvaluationNotFoundException extends RuntimeException {
 

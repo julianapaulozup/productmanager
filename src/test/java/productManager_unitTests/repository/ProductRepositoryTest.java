@@ -1,22 +1,19 @@
-package productManager.repository;
+package productManager_unitTests.repository;
 
 import org.assertj.core.api.Assertions;
 import org.junit.ComparisonFailure;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import productManager.service.product.Product;
-import productManager.service.product.ProductRepository;
+import productManager_unitTests.service.product.Product;
+import productManager_unitTests.service.product.ProductRepository;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 
 @RunWith(SpringRunner.class)
@@ -26,9 +23,6 @@ public class ProductRepositoryTest {
 
     @Autowired
     ProductRepository repository;
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void createShouldPersistDataSucess(){
@@ -54,21 +48,21 @@ public class ProductRepositoryTest {
     @Test
     public void findProductAfterSave() {
 
-        Product product = new Product("Product", 10);
+        Product product = new Product("Produto", 10);
         repository.save(product);
         List<Product> products = repository.findAll();
         assertEquals(4, products.size());
         int size = products.size() - 1 ;
         Assertions.assertThat(products.get(size).getId()).isNotNull();
         Assertions.assertThat(products.get(size).getPrice()).isEqualTo(10);
-        Assertions.assertThat(products.get(size).getName()).isEqualTo("Product");
+        Assertions.assertThat(products.get(size).getName()).isEqualTo("Produto");
 
     }
 
     @Test
     public void deleteProductAfterSave() {
 
-        Product product = new Product("Product", 10);
+        Product product = new Product("Produto", 10);
         repository.save(product);
         List <Product> foundProducts = repository.findAll();
         repository.delete(foundProducts.get(0));
@@ -80,14 +74,14 @@ public class ProductRepositoryTest {
     @Test
     public void updateProductAfterSave() {
 
-        Product product = new Product("Product", 10);
+        Product product = new Product("Produto", 10);
         repository.save(product);
-        product.setName("Product Updated");
+        product.setName("Produto Atualizado");
         repository.save(product);
         List <Product> products = repository.findAll();
         int size = products.size() - 1;
         assertEquals(4, products.size());
-        assertEquals("Product Updated", products.get(size).getName());
+        assertEquals("Produto Atualizado", products.get(size).getName());
 
     }
 

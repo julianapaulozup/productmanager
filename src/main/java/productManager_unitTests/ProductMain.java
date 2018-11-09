@@ -1,4 +1,4 @@
-package productManager;
+package productManager_unitTests;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

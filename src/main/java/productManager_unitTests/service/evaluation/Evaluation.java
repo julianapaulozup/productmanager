@@ -1,10 +1,9 @@
-package productManager.service.evaluation;
+package productManager_unitTests.service.evaluation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import productManager.service.product.Product;
+import productManager_unitTests.service.product.Product;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,7 +44,6 @@ public class Evaluation {
     public Long getId() {
         return id;
     }
-
 
     public double getScore() {
         return score;

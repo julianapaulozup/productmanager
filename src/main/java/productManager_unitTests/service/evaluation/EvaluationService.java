@@ -1,10 +1,10 @@
-package productManager.service.evaluation;
+package productManager_unitTests.service.evaluation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import productManager.exception.EvaluationNotFoundException;
-import productManager.service.product.Product;
+import productManager_unitTests.exception.EvaluationNotFoundException;
+import productManager_unitTests.service.product.Product;
 
 import java.util.List;
 import java.util.Set;

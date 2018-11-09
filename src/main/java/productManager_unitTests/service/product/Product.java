@@ -1,11 +1,10 @@
-package productManager.service.product;
+package productManager_unitTests.service.product;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import productManager.service.evaluation.Evaluation;
+import productManager_unitTests.service.evaluation.Evaluation;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -32,6 +31,7 @@ public class Product implements Serializable {
             inverseJoinColumns=
             @JoinColumn(name="Avaliação_ID", referencedColumnName="id")
     )
+
     @JsonIgnore
     public Set<Evaluation> evaluations = new HashSet<>();
 

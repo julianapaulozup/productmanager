@@ -1,4 +1,4 @@
-package productManager.exception;
+package productManager_unitTests.exception;
 
 public class ProductNotFoundException extends RuntimeException {
 
